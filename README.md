@@ -71,7 +71,7 @@ hardware.
 **Replica synthesis** — two multipliers span the whole amplitude/phase plane:
 
 ```
-replica(t) = I · ref(t) + Q · ref(t − λ/4)
+replica(t) = I · ref(t) + Q · ref(t − τ)      τ = 4.39 ns  (λ/4 at 57 MHz)
 ```
 
 Any amplitude and any phase can be produced from those two numbers, which is
