@@ -19,6 +19,8 @@ anti-phase replica, and subtracts that replica in a 180° combiner. An STM32
 closes the loop at 30 kHz using a logarithmic RF power detector as its only
 feedback.
 
+![The canceller board](images/hardware.PNG)
+
 ## Measured results
 
 | Metric | Target | Measured |
@@ -30,6 +32,33 @@ feedback.
 
 Validated first as a MATLAB/Simulink digital twin, then built and measured in
 hardware.
+
+### Test 1 — across the band
+
+![Interferer cancellation across the VHF band](images/test1/Interferer%20cancellation%20across%20the%20VHF%20band.PNG)
+
+![Wanted-signal loss across the band](images/test1/Wanted-signal%20loss%20across%20the%20band.PNG)
+
+Depth peaks at 28.6 dB near 50 MHz and falls toward the band edges, where the
+fixed λ/4 line no longer delivers 90°.
+
+### Test 2 — frequency separation
+
+![Interferer cancellation vs separation](images/test2/Interferer%20cancellation%20vs%20separation.PNG)
+
+![Wanted-signal loss vs separation](images/test2/Wanted-signal%20loss%20vs%20separation%20(limit%200.5%20dB).PNG)
+
+The wanted signal survives down to 50 kHz separation — a fractional bandwidth
+of 0.00088, far beyond what any practical filter could resolve. This works
+because cancellation is correlation-based, not frequency-based: the wanted
+signal is absent from the reference, so no weight vector can cancel it.
+
+### Test 3 — convergence
+
+![Convergence: cancellation depth vs time](images/test3/Convergence%20cancellation%20depth%20vs%20time.PNG)
+
+Logged inside the MCU at 30 kHz with a 1200-sample buffer, so the spectrum
+analyser's sweep time never enters the measurement.
 
 ---
 
@@ -101,6 +130,7 @@ A_Schematic/            KiCad schematic, netlist, PDF
 B_Firmware_Source/      STM32 firmware (C) + full documentation
 C_Simulation/           MATLAB / Simulink model and sweep scripts
 D_Measurement_Results/  Raw laboratory measurements
+images/                 Measurement plots and hardware photo
 ```
 
 Component datasheets are not included here — they are available from the
